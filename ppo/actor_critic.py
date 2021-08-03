@@ -54,11 +54,15 @@ class ActorCritic(nn.Module):
         node_mask, subg_mask, subg_node_mask = masks
         flatten_node_idxs, flatten_subg_idxs, flatten_subg_node_idxs = idxs
 
+
+        sep_g = sep_g.to(self.device)
+        sep_subg = sep_g.subgraph(flatten_subg_idxs)
+
         # compute logits to get action
         logits = (
             self.actor_net(
                 h, 
-                subg,
+                subg, sep_subg,
                 mask = subg_node_mask
                 )
             .view(-1, 3)
@@ -86,11 +90,15 @@ class ActorCritic(nn.Module):
         node_mask, subg_mask, subg_node_mask = masks
         flatten_node_idxs, flatten_subg_idxs, flatten_subg_node_idxs = idxs
 
+
+        sep_g = sep_g.to(self.device)
+        sep_subg = sep_g.subgraph(flatten_subg_idxs)
+
         # compute logits to get action
         logits = (
             self.actor_net(
                 h, 
-                subg,
+                subg, sep_subg,
                 mask = subg_node_mask
                 )
             .view(-1, 3)
@@ -127,7 +135,7 @@ class ActorCritic(nn.Module):
         node_value_preds[flatten_node_idxs] = (
             self.critic_net(
                 h, 
-                subg,
+                subg, sep_subg,
                 mask = subg_node_mask
                 )
             .view(-1)
@@ -147,11 +155,13 @@ class ActorCritic(nn.Module):
         node_mask, subg_mask, subg_node_mask = masks
         flatten_node_idxs, flatten_subg_idxs, flatten_subg_node_idxs = idxs
 
+        sep_g = sep_g.to(self.device)
+        sep_subg = sep_g.subgraph(flatten_subg_idxs)
         # compute logits to get action
         logits = (
             self.actor_net(
                 h, 
-                subg, 
+                subg, sep_subg,
                 mask = subg_node_mask 
                 )
             .view(-1, 3)
@@ -187,7 +197,7 @@ class ActorCritic(nn.Module):
         node_value_preds[flatten_node_idxs] = (
             self.critic_net(
                 h, 
-                subg, 
+                subg, sep_subg,
                 mask = subg_node_mask
                 )
             .view(-1)

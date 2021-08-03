@@ -1,10 +1,10 @@
 {
-    "model_name" : "maxcutdebug",
+    "model_name" : "withsep",
     "version" : 1.1,
     "model" : -1, 
     "adam_epsilon" : 1e-8,
     "weight_decay" : 0,
-    "device" : 0,
+    "device" : 1,
     "hamming_reward_coef" : 0.1,
     "num_layers" : 4,
     "input_dim" : 2,
@@ -41,5 +41,5 @@
     "test_save_path": "/root/MVC/hmc/data/eco_data/_graphs/testing/BA_40spin_m4_50graphs.pkl_dgl_graph.bin",
     "seed" : 0,
     "problem_type" : "MAXCUT",
-    "with_sep" : 0
+    "with_sep" : 1
 }
