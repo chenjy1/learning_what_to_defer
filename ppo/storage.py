@@ -47,11 +47,12 @@ class RolloutStorage(object):
             num_samples
             )        
         
-    def insert_ob_and_g(self, ob, g):
+    def insert_ob_and_g(self, ob, g, sep_g):
         ob_shape = list(ob.size())
         num_nodes = ob_shape[0]
         num_samples = ob_shape[1]
         self.g = g
+        self.sep_g = sep_g
         self.obs = torch.zeros(
             self.max_t + 1, 
             *ob_shape
@@ -162,6 +163,7 @@ class RolloutStorage(object):
             for idx in sampler:
                 yield (
                     self.g,
+                    self.sep_g,
                     flat_obs[idx], 
                     flat_actions[idx], 
                     flat_action_log_probs[idx], 

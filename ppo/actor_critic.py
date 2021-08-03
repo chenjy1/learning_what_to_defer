@@ -47,7 +47,7 @@ class ActorCritic(nn.Module):
             h   
             )
 
-    def act(self, ob, g):
+    def act(self, ob, g, sep_g):
         num_nodes, batch_size = ob.size(0), ob.size(1)
         
         masks, idxs, subg, h = self.get_masks_idxs_subg_h(ob, g)
@@ -79,7 +79,7 @@ class ActorCritic(nn.Module):
         
         return action
 
-    def act_and_crit(self, ob, g):
+    def act_and_crit(self, ob, g, sep_g):
         num_nodes, batch_size = ob.size(0), ob.size(1)
         
         masks, idxs, subg, h = self.get_masks_idxs_subg_h(ob, g)
@@ -141,7 +141,7 @@ class ActorCritic(nn.Module):
 
         return action, action_log_probs, value_pred
     
-    def evaluate_batch(self, ob, g, action):
+    def evaluate_batch(self, ob, g, sep_g, action):
         num_nodes, batch_size = ob.size(0), ob.size(1)
         masks, idxs, subg, h = self.get_masks_idxs_subg_h(ob, g)
         node_mask, subg_mask, subg_node_mask = masks

@@ -310,7 +310,7 @@ class DQN:
                 # g = dgl.add_self_loop(g)
                 g.set_n_initializer(dgl.init.zero_initializer)
                 ob = self.env.register(g, num_samples = self.train_num_samples)
-                self.rollout.insert_ob_and_g(ob, g)
+                self.rollout.insert_ob_and_g(ob, g, sep_g)
 
 
                 # g.to(self.device)
@@ -321,7 +321,7 @@ class DQN:
                     (action, 
                     action_log_prob, 
                     value_pred, 
-                    ) = self.actor_critic.act_and_crit(ob, g)
+                    ) = self.actor_critic.act_and_crit(ob, g, sep_g)
 
                 # step environments
                 ob, reward, done, info = self.env.step(action)
@@ -368,7 +368,7 @@ class DQN:
             ob = self.env.register(g, num_samples = self.eval_num_samples)
             while True:
                 with torch.no_grad():
-                    action = self.actor_critic.act(ob, g)
+                    action = self.actor_critic.act(ob, g, sep_g)
 
                 ob, reward, done, info = self.env.step(action)
                 if torch.all(done).item():

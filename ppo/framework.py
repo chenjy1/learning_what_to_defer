@@ -38,6 +38,7 @@ class ProxPolicyOptimFramework(object):
             )
         for samples in data_loader:
             (g,
+            sep_g,
             obs, 
             actions, 
             old_action_log_probs, 
@@ -61,7 +62,7 @@ class ProxPolicyOptimFramework(object):
             node_masks
             ) = self.actor_critic.evaluate_batch(
                 obs.permute(1, 0, 2), 
-                g, 
+                g, sep_g,
                 actions.permute(1, 0)
                 )
             
